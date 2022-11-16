@@ -1,6 +1,6 @@
 package com.example.tdd.api;
 
-import com.example.tdd.GameResult;
+import com.example.tdd.Game;
 import com.example.tdd.GameService;
 import com.example.tdd.Hand;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +17,11 @@ public class GameApiController {
     private final GameService gameService;
 
     @PostMapping("/{gameId}/battle/{hand1}/{hand2}")
-    public GameResult doBattle(@PathVariable String gameId,
-                               @PathVariable Hand hand1,
-                               @PathVariable Hand hand2) {
+    public Game doBattle(@PathVariable String gameId,
+                         @PathVariable Hand hand1,
+                         @PathVariable Hand hand2) {
 
         gameService.battle(gameId, hand1, hand2);
-        return gameService.getGameResults(gameId);
+        return gameService.findGame(gameId);
     }
 }

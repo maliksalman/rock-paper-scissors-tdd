@@ -1,6 +1,6 @@
 package com.example.tdd.api;
 
-import com.example.tdd.GameResult;
+import com.example.tdd.Game;
 import com.example.tdd.GameService;
 import com.example.tdd.Hand;
 import com.example.tdd.Result;
@@ -33,13 +33,13 @@ public class GameApiTest {
     void doBattle_okWithSingleBattle() throws Exception {
 
         // GIVEN
-        Mockito.when(gameService.getGameResults("game-1")).thenReturn(GameResult.builder()
+        Mockito.when(gameService.findGame("game-1")).thenReturn(Game.builder()
                 .gameId("game-1")
-                .battles(List.of(GameResult.Battle.builder()
+                .battles(List.of(Game.Battle.builder()
                         .hand1(Hand.SCISSORS)
                         .hand2(Hand.PAPER)
                         .build()))
-                .results(GameResult.Results.builder()
+                .summary(Game.Summary.builder()
                         .hand1(1)
                         .hand2(0)
                         .winner(Result.PLAYER1_WINS)
@@ -61,7 +61,7 @@ public class GameApiTest {
                     "battles": [
                         { "hand1": "SCISSORS", "hand2": "PAPER" }
                     ],
-                    "results": {
+                    "summary": {
                         "hand1": 1,
                         "hand2": 0,
                         "winner": "PLAYER1_WINS"
@@ -77,19 +77,19 @@ public class GameApiTest {
     void doBattle_okWithMultipleBattles() throws Exception {
 
         // GIVEN
-        Mockito.when(gameService.getGameResults("game-1")).thenReturn(GameResult.builder()
+        Mockito.when(gameService.findGame("game-1")).thenReturn(Game.builder()
                 .gameId("game-23")
-                .battles(List.of(GameResult.Battle.builder()
+                .battles(List.of(Game.Battle.builder()
                         .hand1(Hand.PAPER)
                         .hand2(Hand.ROCK)
-                        .build(), GameResult.Battle.builder()
+                        .build(), Game.Battle.builder()
                         .hand1(Hand.SCISSORS)
                         .hand2(Hand.ROCK)
-                        .build(), GameResult.Battle.builder()
+                        .build(), Game.Battle.builder()
                         .hand1(Hand.SCISSORS)
                         .hand2(Hand.PAPER)
                         .build()))
-                .results(GameResult.Results.builder()
+                .summary(Game.Summary.builder()
                         .hand1(204)
                         .hand2(90)
                         .winner(Result.DRAW)
@@ -114,7 +114,7 @@ public class GameApiTest {
                         { "hand1": "SCISSORS", "hand2": "ROCK" },
                         { "hand1": "SCISSORS", "hand2": "PAPER" }
                     ],
-                    "results": {
+                    "summary": {
                         "hand1": 204,
                         "hand2": 90,
                         "winner": "DRAW"
